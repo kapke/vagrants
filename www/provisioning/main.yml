@@ -1,0 +1,22 @@
+  - name: preparing vagrant machine
+    hosts: all
+    tasks:
+      - name: install apt packages
+        sudo: yes
+        apt: "name={{ item }}"
+        with_items:
+          - git
+          - nodejs
+          - npm 
+      - name: install npm packages
+        sudo: yes
+        npm: "name={{ item }} global=yes"
+        with_items:
+          - gulp-shell
+      - name: prepare node under 'node' executable
+        sudo: yes
+        file: path=/usr/bin/node src=/usr/bin/nodejs state=link
+      - name: fetch repo
+        git: repo=git@github.com:kapke/website.git dest=/vagrant/code update=no accept_hostkey=yes
+      - name: install dependencies
+        npm: path=/vagrant/code

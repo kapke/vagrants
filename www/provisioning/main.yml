@@ -13,6 +13,7 @@
         npm: "name={{ item }} global=yes"
         with_items:
           - gulp-shell
+          - bower
       - name: prepare node under 'node' executable
         sudo: yes
         file: path=/usr/bin/node src=/usr/bin/nodejs state=link
